@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Přidat nový typ{% endblock %}
+
+{% block body %}
+    <h1>Přidat nový typ</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">Uložit</button>
+    {{ form_end(form) }}
+    <button class="btn btn-secondary" onclick="window.location.href='{{ path('app_home') }}';">Zpět na seznam</button>
+{% endblock %}

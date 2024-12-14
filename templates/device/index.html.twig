@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zařízení{% endblock %}
+
+{% block body %}
+    <a href="{{ path('route_to_type_list') }}" class="btn btn-primary">Správa typů</a>
+    <h1>Seznam zařízení</h1>
+
+    {% if devices|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Název</th>
+                    <th>Typ</th>
+                    <th>Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for device in devices %}
+                    <tr>
+                        <td>{{ device.id }}</td>
+                        <td>{{ device.name }}</td>
+                        <td>{{ device.type.name }}</td>
+                        <td>
+                            <a href="{{ path('route_to_edit_device', { id: device.id }) }}" class="btn btn-warning btn-sm">Upravit</a>
+
+                            <form action="{{ path('route_to_delete_device', { id: device.id }) }}" method="post" style="display: inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ device.id) }}">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Opravdu chcete toto zařízení smazat?');">Smazat</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Žádná zařízení zatím nejsou.</p>
+    {% endif %}
+
+    <a href="{{ path('route_to_add_device') }}" class="btn btn-primary">Přidat nové zařízení</a>
+{% endblock %}

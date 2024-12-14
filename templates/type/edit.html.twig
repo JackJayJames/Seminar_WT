@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upravit typ{% endblock %}
+
+{% block body %}
+    <h1>Upravit typ</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">Uložit změny</button>
+    {{ form_end(form) }}
+
+    <button class="btn btn-secondary" onclick="window.location.href='{{ path('route_to_type_list') }}';">Zpět na seznam</button>
+{% endblock %}

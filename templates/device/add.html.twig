@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Přidat zařízení{% endblock %}
+
+{% block body %}
+    <h1>Přidat nové zařízení</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">Uložit</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('route_to_device_list') }}" class="btn btn-secondary">Zpět na seznam</a>
+{% endblock %}

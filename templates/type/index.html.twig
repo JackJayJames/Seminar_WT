@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seznam typů{% endblock %}
+
+{% block body %}
+    <h1>Seznam typů</h1>
+
+    {% if types|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Název</th>
+                    <th>Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for type in types %}
+                    <tr>
+                        <td>{{ type.id }}</td>
+                        <td>{{ type.name }}</td>
+                        <td>
+                            <form action="{{ path('route_to_edit_type', { id: type.id }) }}" method="get" style="display: inline;">
+                                <button type="submit" class="btn btn-warning btn-sm">Upravit</button>
+                            </form>
+                            <form action="{{ path('route_to_delete_type', { id: type.id }) }}" method="post" style="display: inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type.id) }}">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Opravdu chcete tento typ smazat?');">Smazat</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Žádné typy zatím neexistují.</p>
+    {% endif %}
+
+    <button class="btn btn-primary" onclick="window.location.href='{{ path('route_to_add_type') }}';">Přidat nový typ</button>
+
+    <button class="btn btn-secondary" onclick="window.location.href='{{ path('app_home') }}';">Zpět na seznam zařízení</button>
+{% endblock %}
