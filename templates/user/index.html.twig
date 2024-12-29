@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Uživatelé{% endblock %}
+
+{% block body %}
+<h1>Seznam uživatelů</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                {% if user.roles[0] == "ROLE_USER" %}
+                    <td>User</td>
+                {% elseif user.roles[0] == "ROLE_ADMIN" %}
+                    <td>Admin</td>
+                {% else %}
+                    <td>Nezadána</td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('route_to_edit_user', {'id': user.id}) }}" class="btn btn-sm btn-warning">Upravit</a>
+                    <form method="post" action="{{ path('route_to_delete_user', {'id': user.id}) }}" style="display:inline;" onsubmit="return confirm('Opravdu chcete smazat tohoto uživatele?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                        <button type="submit" class="btn btn-sm btn-danger">Smazat</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('route_to_add_user') }}" class="btn btn-primary">Přidat uživatele</a>
+<button class="btn btn-secondary" onclick="window.location.href='{{ path('app_home') }}';">Zpět</button>
+{% endblock %}

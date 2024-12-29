@@ -3,9 +3,13 @@
 {% block title %}Zařízení{% endblock %}
 
 {% block body %}
-    <h1>Seznam zařízení</h1>
+    <h1>Dashboard</h1>
     
     <a href="{{ path('route_to_device_list') }}" class="btn btn-primary">Zařízení</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('route_to_type_list') }}" class="btn btn-primary">Správa typů</a>
+        <a href="{{ path('route_to_user_list') }}" class="btn btn-primary">Správa Uživatelů</a>
+    {% endif %}
     
     <!-- Obsah seznamu zařízení  -->
     <div>

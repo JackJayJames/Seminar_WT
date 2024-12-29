@@ -19,6 +19,22 @@ class Device
     #[ORM\ManyToOne]
     private ?Type $type = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'devices')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

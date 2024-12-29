@@ -1,0 +1,28 @@
+/**
+     * @Route("/login", name="security_login")
+     */
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        // Pokud je uživatel přihlášen, přesměruj ho jinam
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home'); // Změň na svoji výchozí stránku
+        }
+
+        // Získej poslední zadané uživatelské jméno a chybu, pokud existuje
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
+
+    /**
+     * @Route("/logout", name="security_logout")
+     */
+    public function logout(): void
+    {
+        // Symfony zpracuje logout automaticky. Tento kód nikdy nebude volán.
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }

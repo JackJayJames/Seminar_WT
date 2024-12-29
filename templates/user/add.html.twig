@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Přidat nového uživatele{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px;">
+        <h1 class="text-center mb-4">Přidat nového uživatele</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.username, 'Username', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.username, { 'attr': { 'class': 'form-control' } }) }}
+                {{ form_errors(form.username, { 'attr': { 'class': 'text-danger' } }) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.email, 'Email', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.email, { 'attr': { 'class': 'form-control' } }) }}
+                {{ form_errors(form.email, { 'attr': { 'class': 'text-danger' } }) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.plainPassword, 'Heslo', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.plainPassword, { 'attr': { 'class': 'form-control' } }) }}
+                {{ form_errors(form.plainPassword, { 'attr': { 'class': 'text-danger' } }) }}
+            </div>
+
+            <div class="mb-3">
+                    {{ form_label(form.role, 'Role uživatele', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.role, { 'attr': { 'class': 'form-select' } }) }}
+                    {{ form_errors(form.role, { 'attr': { 'class': 'text-danger' } }) }}
+                </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-success">Přidat uživatele</button>
+                <a href="{{ path('route_to_user_list') }}" class="btn btn-secondary">Zpět na seznam uživatelů</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

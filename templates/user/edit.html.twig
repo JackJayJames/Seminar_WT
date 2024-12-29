@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Upravit uživatele{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px;">
+        <h1 class="text-center mb-4">Upravit uživatele</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.username, 'Username', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.username, { 'attr': { 'class': 'form-control' } }) }}
+                {{ form_errors(form.username, { 'attr': { 'class': 'text-danger' } }) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.email, 'Email', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.email, { 'attr': { 'class': 'form-control' } }) }}
+                {{ form_errors(form.email, { 'attr': { 'class': 'text-danger' } }) }}
+            </div>
+
+            {% if form.role is defined %}
+                <div class="mb-3">
+                    {{ form_label(form.role, 'Role uživatele', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.role, { 'attr': { 'class': 'form-select' } }) }}
+                    {{ form_errors(form.role, { 'attr': { 'class': 'text-danger' } }) }}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                {{ form_label(form.plainPassword, 'Nové heslo (volitelné)', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.plainPassword, { 'attr': { 'class': 'form-control' } }) }}
+                {{ form_errors(form.plainPassword, { 'attr': { 'class': 'text-danger' } }) }}
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">Uložit změny</button>
+                <a href="{{ path('route_to_user_list') }}" class="btn btn-secondary">Zpět na seznam uživatelů</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

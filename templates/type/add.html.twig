@@ -3,11 +3,28 @@
 {% block title %}Přidat nový typ{% endblock %}
 
 {% block body %}
-    <h1>Přidat nový typ</h1>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px;">
+        <h1 class="text-center mb-4">Přidat nový typ</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-success">Uložit</button>
-    {{ form_end(form) }}
-    <button class="btn btn-secondary" onclick="window.location.href='{{ path('app_home') }}';">Zpět na seznam</button>
+        {{ form_start(form) }}
+            {% for field in form %}
+                {% if field.vars.name != '_token' %}
+                    <div class="mb-3">
+                        {{ form_label(field, null, { 'label_attr': { 'class': 'form-label' } }) }}
+                        {{ form_widget(field, { 'attr': { 'class': 'form-control' } }) }}
+                        {{ form_errors(field, { 'attr': { 'class': 'text-danger' } }) }}
+                    </div>
+                {% else %}
+                    {{ form_widget(field) }} {# Skrytí CSRF tokenu #}
+                {% endif %}
+            {% endfor %}
+            
+            <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-success" type="submit">Uložit</button>
+                <a href="{{ path('app_home') }}" class="btn btn-secondary">Zpět na seznam</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

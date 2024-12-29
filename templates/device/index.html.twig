@@ -3,7 +3,6 @@
 {% block title %}Zařízení{% endblock %}
 
 {% block body %}
-    <a href="{{ path('route_to_type_list') }}" class="btn btn-primary">Správa typů</a>
     <h1>Seznam zařízení</h1>
 
     {% if devices|length > 0 %}
@@ -13,6 +12,9 @@
                     <th>ID</th>
                     <th>Název</th>
                     <th>Typ</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th>Vlastník</th>
+                    {% endif %}
                     <th>Akce</th>
                 </tr>
             </thead>
@@ -22,6 +24,9 @@
                         <td>{{ device.id }}</td>
                         <td>{{ device.name }}</td>
                         <td>{{ device.type.name }}</td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td>{{ device.owner.username }}</td>
+                        {% endif %}
                         <td>
                             <a href="{{ path('route_to_edit_device', { id: device.id }) }}" class="btn btn-warning btn-sm">Upravit</a>
 
@@ -39,4 +44,7 @@
     {% endif %}
 
     <a href="{{ path('route_to_add_device') }}" class="btn btn-primary">Přidat nové zařízení</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <button class="btn btn-secondary" onclick="window.location.href='{{ path('app_home') }}';">Zpět</button>
+    {% endif %}
 {% endblock %}

@@ -5,10 +5,27 @@
 {% block body %}
     <h1>Upravit typ</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-success">Uložit změny</button>
-    {{ form_end(form) }}
+        <div style="max-width: 400px">
+        {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
+        
+        {% for field in form %}
+            {% if field.vars.name != '_token' %} {# Skrytí tokenu #}
+                <div class="mb-3">
+                    {{ form_label(field, null, { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(field, { 'attr': { 'class': 'form-control' } }) }}
+                    {{ form_errors(field, { 'attr': { 'class': 'text-danger' } }) }}
+                </div>
+            {% else %}
+                {{ form_widget(field) }} {# Skryté pole CSRF tokenu #}
+            {% endif %}
+        {% endfor %}
+
+        <div class="d-grid">
+            <button class="btn btn-success" type="submit">Uložit změny</button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
 
     <button class="btn btn-secondary" onclick="window.location.href='{{ path('route_to_type_list') }}';">Zpět na seznam</button>
 {% endblock %}

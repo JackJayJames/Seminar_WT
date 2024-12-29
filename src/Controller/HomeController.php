@@ -11,8 +11,12 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            // Přesměrování na stránku se seznamem zařízení
+            return $this->render('home/index.html.twig', [
+                'controller_name' => 'HomeController',
+            ]);
+        }
+        return $this->redirectToRoute('route_to_device_list');
     }
 }
